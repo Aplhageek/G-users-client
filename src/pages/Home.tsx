@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import Input from '../components/Input/Input';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
@@ -26,6 +26,10 @@ export interface User {
 }
 
 export interface Repository {
+    visibility: ReactNode;
+    size: string;
+    open_issues: string;
+    language: string;
     id: number;
     name: string;
     description: string;
@@ -70,7 +74,7 @@ const HomePage: React.FC = () => {
                     <UserCard user={user} />
                     <ul className='repoWrapper'>
                         {repositories.map(repo => (
-                            <RepoCard key={repo.id} repo={repo} />
+                            <RepoCard owner={user} key={repo.id} repo={repo} />
                         ))}
                     </ul>
                 </div>

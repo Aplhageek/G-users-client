@@ -1,16 +1,24 @@
 import React from 'react'
-import { Repository } from '../../pages/Home'
+import { Repository, User } from '../../pages/Home'
+import { useNavigate } from 'react-router-dom';
 
-interface RepoCardProps{
-    repo : Repository
+interface RepoCardProps {
+    repo: Repository,
+    owner: User
 }
 
-const RepoCard : React.FC<RepoCardProps> = ({repo}) => {
-  return (
-    <div className='repoCard'>
-        <h5 className='repoName'>{repo.name}</h5>
-    </div>
-  )
+const RepoCard: React.FC<RepoCardProps> = ({ owner, repo }) => {
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+        navigate(`/repository/${owner.githubUsername}/${repo.name}` , {state : {repo, owner} ,});
+    };
+    
+    return (
+        <div className='repoCard' onClick={handleCardClick} >
+            <h5 className='repoName'>{repo.name}</h5>
+        </div>
+    )
 }
 
 export default RepoCard

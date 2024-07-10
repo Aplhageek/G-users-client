@@ -113,3 +113,15 @@ li{
   gap: 5px;
   max-width: 100%;
 }
+
+.repoPageWrapper{
+  gap: 2rem;
+  display: flex;
+  align-items: start;
+  padding: 1rem;
+  margin-top: 5rem;
+  margin-left: -5rem;
+}
+.repoOwnerSection{
+  margin-top: 2rem;
+}
