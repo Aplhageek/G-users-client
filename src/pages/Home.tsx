@@ -37,40 +37,56 @@ export interface Repository {
 }
 
 const HomePage: React.FC = () => {
-    const [user, setUser] = useState<User | null>(null);
-    const [repositories, setRepositories] = useState<Repository[]>([]);
+    const [user, setUser] = useState<User | null>(getUserFromLocalStorage);
+    const [repositories, setRepositories] = useState<Repository[]>(getRepoFromLocalStorage);
+
+    function getUserFromLocalStorage() {
+        const savedUser = localStorage.getItem('user');
+        return savedUser ? JSON.parse(savedUser) : null;
+    }
+    function getRepoFromLocalStorage() {
+        const repo = localStorage.getItem('repo');
+        return repo ? JSON.parse(repo) : [];
+    }
 
     const fetchUser = async (username: string) => {
         try {
+            toast.loading("Getting user details...", { id: "user" });
             const data = await fetchUserAPI(username);
+            localStorage.setItem('user', JSON.stringify(data.user));
             setUser(data.user);
-            toast.success("User details fetched successfully.");
+            await fetchRepositories();
+            toast.success("User details fetched successfully.", { id: "user" });
         } catch (error) {
             console.error('Error fetching user details:', error);
+            toast.error("could not load User", { id: "user" });
+        }
+    };
+
+    const fetchRepositories = async () => {
+        if (user) {
+            try {
+                const response = await axios.get(`https://api.github.com/users/${user.githubUsername}/repos`);
+                console.log(response.data);
+                localStorage.setItem('repo', JSON.stringify(response.data));
+                setRepositories(response.data);
+            } catch (error) {
+                console.error('Error fetching repositories:', error);
+            }
         }
     };
 
     useEffect(() => {
-        const fetchRepositories = async () => {
-            if (user) {
-                try {
-                    const response = await axios.get(`https://api.github.com/users/${user.githubUsername}/repos`);
-                    console.log(response.data);
-                    setRepositories(response.data);
-                } catch (error) {
-                    console.error('Error fetching repositories:', error);
-                }
-            }
-        };
-
-        fetchRepositories();
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
     }, [user]);
 
     return (
         <>
             <Input fetchUser={fetchUser} />
             {user && repositories && (
-                <div  className='home'>
+                <div className='home'>
                     <UserCard user={user} />
                     <ul className='repoWrapper'>
                         {repositories.map(repo => (
