@@ -28,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -65,4 +66,50 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+.userCard{
+  display: flex;
+  margin: 2rem 0;
+  gap: 0.5rem;
+  padding : 4px;
+  padding-left: 0;
+  cursor: pointer;
+  max-width: fit-content;
+}
+
+.home{
+  width: 80vw;
+}
+.userUsername{
+  color: slategray;
+  font-size: smaller;
+
+}
+
+li{
+  list-style: none;
+}
+
+.repoCard{
+  max-width: 35vw;
+  margin-top: 1rem;
+  background-color: #d8ccccbb;
+  color: black;
+  padding: 1rem;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.repoCard:hover{
+  background-color: #e6cccc;
+}
+
+.repoWrapper{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 100%;
 }
