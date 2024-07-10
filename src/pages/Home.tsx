@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
             await fetchRepositories();
             toast.success("User details fetched successfully.", { id: "user" });
         } catch (error) {
-            console.error('Error fetching user details:', error);
+            // console.error('Error fetching user details:', error);
             toast.error("could not load User", { id: "user" });
         }
     };
@@ -67,11 +67,11 @@ const HomePage: React.FC = () => {
         if (user) {
             try {
                 const response = await axios.get(`https://api.github.com/users/${user.githubUsername}/repos`);
-                console.log(response.data);
+                // console.log(response.data);
                 localStorage.setItem('repo', JSON.stringify(response.data));
                 setRepositories(response.data);
             } catch (error) {
-                console.error('Error fetching repositories:', error);
+                // console.error('Error fetching repositories:', error);
             }
         }
     };

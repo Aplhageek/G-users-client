@@ -6,7 +6,7 @@ export const baseUrl = "https://g-users-server.onrender.com";
 export const fetchUserAPI = async (username: string) => {
     try {
         const res = await axios.post(`${baseUrl}/users`, { username });
-        console.log(res.data);
+        // console.log(res.data);
         return res.data;
     } catch (error) {
         toast.error("Something went wrong");
