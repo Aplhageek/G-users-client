@@ -125,3 +125,19 @@ li{
 .repoOwnerSection{
   margin-top: 2rem;
 }
+
+.homebtn{
+  background-color: #d8ccccbb;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+.homebtn:hover{
+  transition: all 0.2s ease;
+  background-color: #b7cfd6;
+}
