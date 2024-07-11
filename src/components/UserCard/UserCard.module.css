@@ -1,4 +1,9 @@
 .userCard{
     display: flex;
-    
-}
+    margin: 2rem 0;
+    gap: 0.5rem;
+    padding : 4px;
+    padding-left: 0;
+    cursor: pointer;
+    max-width: fit-content;
+  }

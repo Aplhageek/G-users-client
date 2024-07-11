@@ -1,11 +1,12 @@
 import React, { useState, useEffect, ReactNode } from 'react';
-import Input from '../components/Input/Input';
+import Input from '../../components/Input/Input';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { fetchUserAPI } from '../config/api';
-import UserCard from '../components/UserCard/UserCard';
-import RepoCard from '../components/RepoCard/RepoCard';
+import { fetchUserAPI } from '../../config/api';
+import UserCard from '../../components/UserCard/UserCard';
+import RepoCard from '../../components/RepoCard/RepoCard';
+import styles from './Home.module.css';
 
 export interface User {
     id: number;
@@ -86,9 +87,9 @@ const HomePage: React.FC = () => {
         <>
             <Input fetchUser={fetchUser} />
             {user && repositories && (
-                <div className='home'>
+                <div className={styles.home}>
                     <UserCard user={user} />
-                    <ul className='repoWrapper'>
+                    <ul className={styles.repoWrapper}>
                         {repositories.map(repo => (
                             <RepoCard owner={user} key={repo.id} repo={repo} />
                         ))}

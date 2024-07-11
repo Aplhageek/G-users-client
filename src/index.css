@@ -68,76 +68,18 @@ button:focus-visible {
   }
 }
 
-
-.userCard{
-  display: flex;
-  margin: 2rem 0;
-  gap: 0.5rem;
-  padding : 4px;
-  padding-left: 0;
-  cursor: pointer;
-  max-width: fit-content;
-}
-
-.home{
-  width: 80vw;
-}
-.userUsername{
+.lightText{
   color: slategray;
   font-size: smaller;
-
 }
 
 li{
   list-style: none;
 }
 
-.repoCard{
-  max-width: 35vw;
-  margin-top: 1rem;
-  background-color: #d8ccccbb;
-  color: black;
-  padding: 1rem;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
 
-.repoCard:hover{
-  background-color: #e6cccc;
-}
 
-.repoWrapper{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  max-width: 100%;
-}
-
-.repoPageWrapper{
-  gap: 2rem;
-  display: flex;
-  align-items: start;
-  padding: 1rem;
-  margin-top: 5rem;
-  margin-left: -5rem;
-}
 .repoOwnerSection{
   margin-top: 2rem;
 }
 
-.homebtn{
-  background-color: #d8ccccbb;
-  padding: 0.5rem 1rem;
-  border-radius: 15px;
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  cursor: pointer;
-  color: black;
-  font-weight: bold;
-}
-.homebtn:hover{
-  transition: all 0.2s ease;
-  background-color: #b7cfd6;
-}

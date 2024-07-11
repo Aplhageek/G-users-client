@@ -1,0 +1,15 @@
+.repoCard{
+    max-width: 35vw;
+    margin-top: 1rem;
+    background-color: #d8ccccbb;
+    color: black;
+    padding: 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .repoCard:hover{
+    background-color: #e6cccc;
+  }
+  

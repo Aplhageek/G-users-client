@@ -1,7 +1,7 @@
 import { Toaster } from 'react-hot-toast';
 import './App.css';
-import HomePage from './pages/Home';
-import RepositoryPage from './pages/RepositoryPage';
+import HomePage from './pages/Home/Home';
+import RepositoryPage from './pages/RepositoryPage/RepositoryPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
