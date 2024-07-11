@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Repository, User } from '../../pages/Home/Home'
 import { useNavigate } from 'react-router-dom';
 import styles from './RepoCard.module.css'
@@ -11,9 +11,9 @@ interface RepoCardProps {
 const RepoCard: React.FC<RepoCardProps> = ({ owner, repo }) => {
     const navigate = useNavigate();
 
-    const handleCardClick = () => {
-        navigate(`/repository/${owner.githubUsername}/${repo.name}`, { state: { repo, owner }, });
-    };
+    const handleCardClick = useCallback(() => {
+        navigate(`/repository/${owner.githubUsername}/${repo.name}`, { state: { repo, owner } });
+    }, [navigate, owner, repo]);
 
     return (
         <div className={styles.repoCard} onClick={handleCardClick} >
@@ -22,4 +22,5 @@ const RepoCard: React.FC<RepoCardProps> = ({ owner, repo }) => {
     )
 }
 
-export default RepoCard
+const MemoizedRepoCard = React.memo(RepoCard);
+export default MemoizedRepoCard;

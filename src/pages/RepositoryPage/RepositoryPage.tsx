@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Repository, User } from '../Home/Home';
 import UserCard from '../../components/UserCard/UserCard';
@@ -11,9 +11,9 @@ const RepositoryPage: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const goHome = () => {
+    const goHome = useCallback(() => {
         navigate("/");
-    };
+    }, [navigate]);
 
     return (
         <>
@@ -34,4 +34,6 @@ const RepositoryPage: React.FC = () => {
     );
 };
 
-export default RepositoryPage;
+
+const MemoizedURepositoryPage = React.memo(RepositoryPage);
+export default MemoizedURepositoryPage;

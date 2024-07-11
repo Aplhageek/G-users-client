@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 import styles from './Input.module.css';
-import React, { useRef, useState } from 'react'
+import React, { memo, useCallback, useRef, useState } from 'react'
 
 interface InputProps {
     fetchUser : (username : string) => void;
@@ -13,25 +13,23 @@ const Input: React.FC<InputProps> = ({fetchUser}) => {
 
 
     // TODO: prevent default behaviour of reloading after submit btn clicked
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         inputref.current?.blur();
-        
+
         if (username.trim().length < 1) {
             toast("Please Enter the Todo First!");
             return;
         }
-
-        // createTodo(username);
         fetchUser(username);
 
         setUsername("");
-    }
+    }, [username, fetchUser]);
 
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
-    }
+    }, []);
 
 
     return (
@@ -55,4 +53,6 @@ const Input: React.FC<InputProps> = ({fetchUser}) => {
     )
 }
 
-export default Input;
+
+const MemoizedInput = memo(Input);
+export default MemoizedInput;

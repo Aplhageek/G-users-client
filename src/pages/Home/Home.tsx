@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
 import Input from '../../components/Input/Input';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
@@ -50,32 +50,28 @@ const HomePage: React.FC = () => {
         return repo ? JSON.parse(repo) : [];
     }
 
-    const fetchUser = async (username: string) => {
+    const fetchUser = useCallback(async (username: string) => {
         try {
             toast.loading("Getting user details...", { id: "user" });
             const data = await fetchUserAPI(username);
             localStorage.setItem('user', JSON.stringify(data.user));
             setUser(data.user);
-            await fetchRepositories();
+            await fetchRepositories(data.user);
             toast.success("User details fetched successfully.", { id: "user" });
         } catch (error) {
-            // console.error('Error fetching user details:', error);
-            toast.error("could not load User", { id: "user" });
+            toast.error("Could not load user", { id: "user" });
         }
-    };
+    }, []);
 
-    const fetchRepositories = async () => {
-        if (user) {
-            try {
-                const response = await axios.get(`https://api.github.com/users/${user.githubUsername}/repos`);
-                // console.log(response.data);
-                localStorage.setItem('repo', JSON.stringify(response.data));
-                setRepositories(response.data);
-            } catch (error) {
-                // console.error('Error fetching repositories:', error);
-            }
+    const fetchRepositories = useCallback(async (user: User) => {
+        try {
+            const response = await axios.get(`https://api.github.com/users/${user.githubUsername}/repos`);
+            localStorage.setItem('repo', JSON.stringify(response.data));
+            setRepositories(response.data);
+        } catch (error) {
+            // Handle error
         }
-    };
+    }, []);
 
     useEffect(() => {
         if (user) {
@@ -83,16 +79,22 @@ const HomePage: React.FC = () => {
         }
     }, [user]);
 
+
+
+    const memoizedUserCard = useMemo(() => user && <UserCard user={user} />, [user]);
+    const memoizedRepoCards = useMemo(() => repositories.map(repo => (
+        <RepoCard owner={user!} key={repo.id} repo={repo} />
+    )), [repositories, user]);
+
+
     return (
         <>
             <Input fetchUser={fetchUser} />
             {user && repositories && (
                 <div className={styles.home}>
-                    <UserCard user={user} />
+                    {memoizedUserCard}
                     <ul className={styles.repoWrapper}>
-                        {repositories.map(repo => (
-                            <RepoCard owner={user} key={repo.id} repo={repo} />
-                        ))}
+                        {memoizedRepoCards}
                     </ul>
                 </div>
             )}
@@ -100,4 +102,6 @@ const HomePage: React.FC = () => {
     );
 };
 
-export default HomePage;
+
+const MemoizedUHomePage = React.memo(HomePage);
+export default MemoizedUHomePage;
