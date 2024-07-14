@@ -7,6 +7,8 @@ import { fetchUserAPI } from '../../config/api';
 import UserCard from '../../components/UserCard/UserCard';
 import RepoCard from '../../components/RepoCard/RepoCard';
 import styles from './Home.module.css';
+import { FaUserFriends } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export interface User {
     id: number;
@@ -41,6 +43,8 @@ const HomePage: React.FC = () => {
     const [user, setUser] = useState<User | null>(getUserFromLocalStorage);
     const [repositories, setRepositories] = useState<Repository[]>(getRepoFromLocalStorage);
 
+    const navigate = useNavigate();
+
     function getUserFromLocalStorage() {
         const savedUser = localStorage.getItem('user');
         return savedUser ? JSON.parse(savedUser) : null;
@@ -69,7 +73,7 @@ const HomePage: React.FC = () => {
             localStorage.setItem('repo', JSON.stringify(response.data));
             setRepositories(response.data);
         } catch (error) {
-            // Handle error
+            toast.error("Could not load repos");           
         }
     }, []);
 
@@ -92,7 +96,10 @@ const HomePage: React.FC = () => {
             <Input fetchUser={fetchUser} />
             {user && repositories && (
                 <div className={styles.home}>
-                    {memoizedUserCard}
+                    <div className={styles.userWrapper}>
+                        {memoizedUserCard}
+                        <FaUserFriends className={styles.friends} onClick={() => navigate(`/friends/${user.username}` , {state: {user}} )} />
+                    </div>
                     <ul className={styles.repoWrapper}>
                         {memoizedRepoCards}
                     </ul>
